@@ -1,0 +1,6 @@
+.env
+processed_uids.json
+__pycache__/
+*.pyc
+.venv/
+venv/
