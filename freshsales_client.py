@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class FreshsalesClient:
     def __init__(self, domain: str, api_key: str) -> None:
-        self._base = f"https://{domain}.freshsales.io/api"
+        self._base = f"https://{domain}.myfreshworks.com/crm-sandbox/sales/api"
         self._headers = {
             "Authorization": f"Token token={api_key}",
             "Content-Type": "application/json",
