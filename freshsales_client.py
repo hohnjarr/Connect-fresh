@@ -28,7 +28,19 @@ class FreshsalesClient:
             logger.error("Freshsales contact search failed: %s", exc)
             return None
 
-        data = resp.json()
+        logger.debug(
+            "Freshsales search response: status=%s body=%r", resp.status_code, resp.text
+        )
+
+        try:
+            data = resp.json()
+        except ValueError:
+            logger.error(
+                "Freshsales contact search returned non-JSON: status=%s body=%r",
+                resp.status_code,
+                resp.text,
+            )
+            return None
         contacts = data.get("contacts") or []
 
         if not contacts:
