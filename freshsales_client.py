@@ -63,12 +63,24 @@ class FreshsalesClient:
         url = f"{self._base}/contacts/{contact_id}"
         payload = {"contact": {field_name: True}}
 
+        logger.info(
+            "Freshworks update request: PUT %s body=%r", url, payload
+        )
+
         try:
             resp = requests.put(url, headers=self._headers, json=payload, timeout=15)
             resp.raise_for_status()
         except requests.RequestException as exc:
-            logger.error("Freshworks contact update failed for id=%s: %s", contact_id, exc)
+            logger.error(
+                "Freshworks contact update failed for id=%s: %s — status=%s body=%r",
+                contact_id,
+                exc,
+                getattr(exc.response, "status_code", "N/A"),
+                getattr(exc.response, "text", "N/A"),
+            )
             return False
 
-        logger.info("Marked contact %s as qualified student (field=%s)", contact_id, field_name)
+        logger.info(
+            "Freshworks update response: status=%s body=%r", resp.status_code, resp.text
+        )
         return True
