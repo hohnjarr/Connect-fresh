@@ -61,7 +61,7 @@ class FreshsalesClient:
     def mark_qualified_student(self, contact_id: int, field_name: str) -> bool:
         """Set field_name to True on the given contact. Returns True on success."""
         url = f"{self._base}/contacts/{contact_id}"
-        payload = {"contact": {field_name: True}}
+        payload = {"contact": {"custom_field": {field_name: True}}}
 
         logger.info(
             "Freshworks update request: PUT %s body=%r", url, payload
